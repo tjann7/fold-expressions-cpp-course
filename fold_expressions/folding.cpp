@@ -1,34 +1,8 @@
 #include <iostream>
 
-/**
- * A C++17 feature
- * 
- * 1) Unary Left Fold Expression
- */
-
-template<typename... Args>
-auto all(Args... args) { return (... + args); }
-
-bool bool_left = all(true, true, true, false);
-int b = all(1, 2, 3, 4);
-// within all(), the unary left fold expands as
-//  return ((true && true) && true) && false;
-// b is false
-
-template<typename... Args>
-auto all_right(Args... args) { return (args + ...); }
-
-bool bool_right = all_right(true, true, true, false);
-int b_right = all_right(1, 2, 3, 4);
-// within all(), the unary left fold expands as
-//  return ((true && true) && true) && false;
-// b is false
-
-
-
 
 /**
- * Why do we need it?
+ * Folding and Fold Expressions
  */
 
 
@@ -55,10 +29,6 @@ int sum() {
     return 0;
 }
 
-/**
- * Types of Fold Expressions
- * 
- */
 
 class my_int {
 public:
