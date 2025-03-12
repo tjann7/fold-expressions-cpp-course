@@ -1,11 +1,6 @@
 #include <iostream>
 
 
-/**
- * Folding and Fold Expressions
- */
-
-
 int sum(int x) {
     return x;
 }
@@ -18,6 +13,9 @@ int sum(int x, int y, int z) {
     return x + y + z;
 }
 
+/**
+ * Folding can be used along with other function overridings
+ */
 
 template<typename... Args>
 int sum(Args... args)
@@ -29,6 +27,9 @@ int sum() {
     return 0;
 }
 
+/**
+ * Unary Right Fold / Unary Left Fold
+ */
 
 class my_int {
 public:
@@ -60,6 +61,10 @@ int sum_right_fold(Args... args)
     return (args + ...);
 }
 
+/**
+ * Binary Left Fold / Binary Right Fold
+ */
+
 template<class... Args>
 int subtract_left_fold(Args... args) {
     return (10 - ... - args);
@@ -69,6 +74,29 @@ template<class... Args>
 int subtract_right_fold(Args... args) {
     return (args - ... - 10);
 }
+
+/**
+ * Printer example + Reverse Printer
+ */
+
+template<typename... Args>
+void printer_left(Args&&... args) {
+    (std::cout << ... << args) << '\n';
+}
+
+template<typename Last>
+void print_right(Last&& last) {
+    std::cout << last;
+}
+
+template<typename First, typename... Rest>
+void print_right(First&& first, Rest&&... rest) {
+    print_right(rest...);
+    std::cout << first;
+}
+
+
+
 
 int main() {
     my_int v1(1), v2(2), v3(3), v4(4), v5(5);
@@ -83,4 +111,9 @@ int main() {
     std::cout << subtract_left_fold(1, 2, 3, 4, 5) << "\n";
     std::cout << "Right Folding...\n";
     std::cout << subtract_right_fold(1, 2, 3, 4, 5) << "\n";
+
+    int a = 1, b = 2, c = 3, d = 4;
+
+    printer_left(a, b, c, d);
+    print_right(a, b, c, d);
 }
